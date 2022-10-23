@@ -23,10 +23,13 @@ const wsServer = new Server(httpServer, {
     credentials: true,
   },
 }); // http 위에 socket 서버
+
+//admin.ui
 instrument(wsServer, {
   auth: false,
 });
 
+// 중복되는 방제목 방지
 function publicRooms() {
   const {
     sockets: {
@@ -42,6 +45,7 @@ function publicRooms() {
   return publicRooms; // public 개인/공개방, sids개인방, 퍼블릭룸에서 sids를 없앤거임.
 }
 
+// 방에 들어온 유저 수
 function countRoom(roomName) {
   return wsServer.sockets.adapter.rooms.get(roomName)?.size;
 }
